@@ -48,7 +48,7 @@ services:
       DB_PASSWORD: admin
       DB_SCHEMA: public
       TABLE_NAME: sre_kpis
-      SAMPLE_CSV_PATH: sample_kpis.csv
+      # SAMPLE_CSV_PATH: sample_kpis.csv
       LOAD_RETAIL_DATA: "true"
       LOAD_FRESHSERVICE_DATA: "false"
       AUTO_GENERATE_DASHBOARDS: "true"
