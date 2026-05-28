@@ -14,7 +14,7 @@ datasources:
 
     jsonData:
       sslmode: disable
-      postgresVersion: 1500
+      postgresVersion: 1600
 
     secureJsonData:
       password: admin

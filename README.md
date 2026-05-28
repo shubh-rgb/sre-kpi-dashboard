@@ -1,46 +1,90 @@
-# SRE KPI Dashboard with Retail Analytics
+# SRE KPI Dashboard with Retail Analytics & Dynamic Dashboard Generation
 
 This repository contains a local stack for building multi-purpose dashboards using:
 
 - **PostgreSQL** as the data storage backend
 - **Grafana** for visualization
 - **Python ETL pipeline** to ingest KPI and retail data into PostgreSQL
+- **🆕 Automatic Dashboard Generation** from CSV files
+- **🆕 Freshservice API Integration** for support metrics
 
-## Getting started
+## 🚀 Quick Start
 
-1. Start the stack:
-
+### 1. Run Setup
 ```bash
-sudo docker-compose up --build
+bash setup.sh
 ```
 
-2. Grafana is available at `http://localhost:3000`.
-   - Default credentials: `admin` / `admin`
+### 2. Start the Stack
+```bash
+docker-compose up --build
+```
 
-3. PostgreSQL is available at `localhost:5432`.
-   - Database: `governance`
-   - User: `postgres`
-   - Password: `admin`
+### 3. Access Grafana
+- **URL**: http://localhost:3000
+- **Username**: admin
+- **Password**: admin
+
+### 4. Add Custom Data
+Simply drop a CSV file in `pipeline/documents/` and the system will:
+- ✅ Create a database table automatically
+- ✅ Generate a Grafana dashboard
+- ✅ Start visualizing your data
+
+Example:
+```bash
+cp my_analysis.csv pipeline/documents/
+docker-compose restart pipeline
+```
+
+## 📊 What's New (Enhanced Version)
+
+### ✨ Automatic Dashboard Generation
+- Drop any CSV in `pipeline/documents/`
+- Instant database table creation
+- Auto-generated Grafana dashboards with:
+  - Data tables
+  - Metric gauges
+  - Time series charts
+  - Automatic data type detection
+
+### 🔌 Freshservice Integration (Optional)
+Connect to your Freshservice account to visualize:
+- Support tickets
+- Incidents
+- Problems
+- Change requests
+
+[See full feature guide →](FEATURES.md)
 
 ## Running as a Normal User
 
 1. Add your user to the docker group:
+   ```bash
    sudo usermod -aG docker $USER
+   ```
 
 2. Log out and log back in (or reboot) for the change to take effect.
 
 3. Run docker-compose commands as your normal user:
+   ```bash
    docker-compose up
+   ```
 
-## Available Dashboards
+## 📋 Available Dashboards
 
-Three pre-configured dashboards are automatically provisioned:
-
+### Pre-configured Dashboards
 1. **SRE KPI Dashboard** (`sre_kpi_dashboard.json`) - Service reliability metrics
 2. **Retail Sales Dashboard** (`retail_sales_dashboard.json`) - Daily sales trends, revenue analysis, conversion rates
 3. **Retail Products Dashboard** (`retail_products_dashboard.json`) - Product catalog, inventory levels, stock analysis
 
-## Sample data
+### Auto-Generated Dashboards
+Any CSV in `pipeline/documents/` gets its own dashboard:
+- **System Metrics Dashboard** (example: `example_system_metrics.csv`)
+- **Regional Sales Dashboard** (example: `example_regional_sales.csv`)
+- **Your Custom Dashboards** (add more CSVs!)
+
+## 📁 Sample Data
 
 Sample CSV files are provided in the `pipeline/` directory:
 
@@ -48,6 +92,8 @@ Sample CSV files are provided in the `pipeline/` directory:
 - `retail_sales.csv` — Daily retail sales metrics
 - `retail_products.csv` — Product catalog
 - `retail_orders.csv` — Order transactions
+- `documents/example_system_metrics.csv` — CPU/Memory metrics example
+- `documents/example_regional_sales.csv` — Regional sales example
 
 ## Pipeline
 
