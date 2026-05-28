@@ -1,0 +1,44 @@
+{
+  "id": null,
+  "uid": "sre-kpi-dashboard",
+  "title": "SRE KPI Dashboard",
+  "timezone": "browser",
+  "schemaVersion": 40,
+  "version": 1,
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Latest KPI table",
+      "type": "table",
+      "gridPos": {"x": 0, "y": 0, "w": 24, "h": 9},
+      "datasource": "Governance Postgres",
+      "targets": [
+        {
+          "refId": "A",
+          "format": "table",
+          "rawSql": "SELECT collected_at AS time, service_name, metric_name, metric_value, status FROM sre_kpis ORDER BY collected_at DESC LIMIT 50"
+        }
+      ],
+      "options": {"showHeader": true, "showFooter": true}
+    },
+    {
+      "id": 2,
+      "title": "Metric value over time",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 9, "w": 24, "h": 9},
+      "datasource": "Governance Postgres",
+      "targets": [
+        {
+          "refId": "A",
+          "format": "time_series",
+          "rawSql": "SELECT collected_at AS time, metric_value, metric_name FROM sre_kpis ORDER BY time"
+        }
+      ],
+      "fieldConfig": {"defaults": {"unit": "short"}, "overrides": []}
+    }
+  ],
+  "templating": {"list": []},
+  "annotations": {"list": []},
+  "navigation": {"timepicker": {"type": "timepicker"}}
+}

@@ -1,0 +1,11 @@
+service_name,metric_name,metric_value,collected_at,status
+auth-service,error_rate,0.72,2026-05-27T13:00:00Z,ok
+payment-service,p95_latency_ms,185.0,2026-05-27T13:00:00Z,warning
+search-service,availability_pct,99.92,2026-05-27T13:00:00Z,ok
+backend-service,incident_count,2,2026-05-27T13:00:00Z,warning
+index-service,error_rate,1.40,2026-05-27T13:00:00Z,critical
+auth-service,p99_latency_ms,305.0,2026-05-27T13:00:00Z,warning
+payment-service,availability_pct,99.88,2026-05-27T13:15:00Z,ok
+search-service,p95_latency_ms,210.0,2026-05-27T13:15:00Z,warning
+backend-service,error_rate,0.95,2026-05-27T13:15:00Z,warning
+index-service,p99_latency_ms,450.0,2026-05-27T13:15:00Z,critical
