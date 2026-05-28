@@ -7,12 +7,14 @@ datasources:
     orgId: 1
     isDefault: true
     editable: true
+
+    url: postgres:5432
+    user: postgres
+    database: governance
+
     jsonData:
-      host: postgres
-      port: 5432
-      database: governance
-      user: postgres
       sslmode: disable
-      postgresVersion: 16
+      postgresVersion: 1500
+
     secureJsonData:
       password: admin
