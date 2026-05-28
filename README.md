@@ -22,6 +22,16 @@ sudo docker-compose up --build
    - User: `postgres`
    - Password: `admin`
 
+## Running as a Normal User
+
+1. Add your user to the docker group:
+   sudo usermod -aG docker $USER
+
+2. Log out and log back in (or reboot) for the change to take effect.
+
+3. Run docker-compose commands as your normal user:
+   docker-compose up
+
 ## Available Dashboards
 
 Three pre-configured dashboards are automatically provisioned:
