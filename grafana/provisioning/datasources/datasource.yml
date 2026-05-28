@@ -8,7 +8,8 @@ datasources:
     isDefault: true
     editable: true
 
-    url: postgres:5432
+    url: postgres
+    port: 5432
     user: postgres
     database: governance
 
