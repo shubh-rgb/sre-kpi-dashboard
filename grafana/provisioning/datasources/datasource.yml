@@ -1,15 +1,18 @@
 apiVersion: 1
+
 datasources:
   - name: Governance Postgres
-    uid: governance-postgres
     type: postgres
     access: proxy
     orgId: 1
-    url: postgres:5432
-    database: governance
-    user: postgres
+    isDefault: true
+    editable: true
+    jsonData:
+      host: postgres
+      port: 5432
+      database: governance
+      user: postgres
+      sslmode: disable
+      postgresVersion: 16
     secureJsonData:
       password: admin
-    isDefault: true
-    jsonData:
-      sslmode: disable

@@ -12,12 +12,18 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   grafana:
     image: grafana/grafana:latest
     container_name: governance-grafana
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "3000:3000"
     environment:
@@ -43,6 +49,7 @@ services:
       DB_SCHEMA: public
       TABLE_NAME: sre_kpis
       SAMPLE_CSV_PATH: sample_kpis.csv
+      LOAD_RETAIL_DATA: "true"
     volumes:
       - ./pipeline:/app
     command: ["python", "etl.py"]

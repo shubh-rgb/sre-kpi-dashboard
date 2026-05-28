@@ -1,0 +1,16 @@
+product_id,product_name,category,price,stock_quantity
+1,Laptop Pro,Electronics,1299.99,45
+2,USB-C Cable,Electronics,29.99,200
+3,Wireless Mouse,Electronics,49.99,150
+4,Monitor 4K,Electronics,599.99,30
+5,Mechanical Keyboard,Electronics,149.99,80
+6,Office Chair,Furniture,299.99,25
+7,Desk Lamp,Furniture,79.99,100
+8,Standing Desk,Furniture,499.99,15
+9,Desk Organizer,Furniture,39.99,120
+10,Monitor Stand,Furniture,59.99,90
+11,T-Shirt,Apparel,29.99,200
+12,Jeans,Apparel,79.99,150
+13,Jacket,Apparel,149.99,60
+14,Shoes,Apparel,99.99,100
+15,Cap,Apparel,24.99,180

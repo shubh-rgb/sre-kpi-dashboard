@@ -1,10 +1,10 @@
-# SRE KPI Dashboard
+# SRE KPI Dashboard with Retail Analytics
 
-This repository contains a local stack for building an SRE KPI dashboard using:
+This repository contains a local stack for building multi-purpose dashboards using:
 
-- **PostgreSQL** as the KPI storage backend
+- **PostgreSQL** as the data storage backend
 - **Grafana** for visualization
-- **Python ETL pipeline** to ingest KPI CSV data into PostgreSQL
+- **Python ETL pipeline** to ingest KPI and retail data into PostgreSQL
 
 ## Getting started
 
@@ -22,26 +22,46 @@ sudo docker-compose up --build
    - User: `postgres`
    - Password: `admin`
 
+## Available Dashboards
+
+Three pre-configured dashboards are automatically provisioned:
+
+1. **SRE KPI Dashboard** (`sre_kpi_dashboard.json`) - Service reliability metrics
+2. **Retail Sales Dashboard** (`retail_sales_dashboard.json`) - Daily sales trends, revenue analysis, conversion rates
+3. **Retail Products Dashboard** (`retail_products_dashboard.json`) - Product catalog, inventory levels, stock analysis
+
 ## Sample data
 
-A sample CSV file is provided in `pipeline/sample_kpis.csv`.
-The pipeline reads that CSV on startup and inserts rows into `sre_kpis`.
+Sample CSV files are provided in the `pipeline/` directory:
+
+- `sample_kpis.csv` — SRE KPI data
+- `retail_sales.csv` — Daily retail sales metrics
+- `retail_products.csv` — Product catalog
+- `retail_orders.csv` — Order transactions
 
 ## Pipeline
 
-The pipeline service runs `pipeline/etl.py`, waits for PostgreSQL, creates the target schema and table dynamically, and loads KPI rows from `pipeline/sample_kpis.csv`.
+The pipeline service runs `pipeline/etl.py`, which:
 
-You can change the ingestion target by overriding these environment variables in `docker-compose.yml`:
+1. Waits for PostgreSQL to be available
+2. Creates tables dynamically based on CSV schema
+3. Loads SRE KPI data from `sample_kpis.csv`
+4. Loads retail data from retail_*.csv files (if `LOAD_RETAIL_DATA` is enabled)
 
-- `DB_SCHEMA` — Postgres schema name
-- `TABLE_NAME` — target table name
-- `SAMPLE_CSV_PATH` — CSV file path inside `pipeline/`
+### Pipeline Configuration
+
+You can customize the pipeline by overriding these environment variables in `docker-compose.yml`:
+
+- `DB_SCHEMA` — Postgres schema name (default: `public`)
+- `TABLE_NAME` — target table name for SRE KPIs (default: `sre_kpis`)
+- `SAMPLE_CSV_PATH` — CSV file path for SRE KPIs (default: `sample_kpis.csv`)
+- `LOAD_RETAIL_DATA` — enable/disable retail data loading (default: `true`)
 
 ## Grafana provisioning
 
 Grafana auto-provisions:
 
 - a PostgreSQL datasource from `grafana/provisioning/datasources/datasource.yml`
-- a dashboard from `grafana/provisioning/dashboards/sre_kpi_dashboard.json`
+- all dashboards from `grafana/provisioning/dashboards/*.json`
 
-Open `http://localhost:3000` and browse the `SRE KPI Dashboard`.
+Open `http://localhost:3000` and browse the available dashboards.

@@ -27,6 +27,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "admin")
 DB_SCHEMA = os.getenv("DB_SCHEMA", "public")
 TABLE_NAME = os.getenv("TABLE_NAME", "sre_kpis")
 SAMPLE_CSV_PATH = Path(os.getenv("SAMPLE_CSV_PATH", "sample_kpis.csv"))
+LOAD_RETAIL_DATA = os.getenv("LOAD_RETAIL_DATA", "true").lower() == "true"
 
 DATABASE_URL = (
     f"postgresql+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
@@ -116,7 +117,7 @@ def normalize_value(value: str, column_type):
     return raw
 
 
-def build_table(columns):
+def build_table(table_name, columns):
     table_columns = [Column("id", Integer, primary_key=True, autoincrement=True)]
     for name, column_type in columns.items():
         if name == "id":
@@ -130,7 +131,7 @@ def build_table(columns):
         else:
             table_columns.append(Column(name, String(255), nullable=True))
 
-    return Table(TABLE_NAME, metadata, *table_columns, schema=DB_SCHEMA)
+    return Table(table_name, metadata, *table_columns, schema=DB_SCHEMA)
 
 
 def wait_for_postgres(engine, retries=15, delay=3):
@@ -191,7 +192,7 @@ def insert_rows(session, table, rows):
         return
     session.execute(table.insert(), rows)
     session.commit()
-    print(f"Inserted {len(rows)} rows into {DB_SCHEMA}.{TABLE_NAME}.")
+    print(f"Inserted {len(rows)} rows into {DB_SCHEMA}.{table.name}.")
 
 
 def generate_fallback_rows():
@@ -205,6 +206,28 @@ def generate_fallback_rows():
     return rows
 
 
+def load_retail_data(engine, session):
+    """Load retail datasets from CSV files"""
+    pipeline_dir = Path(__file__).parent
+    
+    retail_files = {
+        "retail_orders": pipeline_dir / "retail_orders.csv",
+        "retail_products": pipeline_dir / "retail_products.csv",
+        "retail_sales": pipeline_dir / "retail_sales.csv",
+    }
+    
+    for table_name, csv_path in retail_files.items():
+        csv_rows = load_csv_rows(csv_path)
+        if csv_rows:
+            columns = build_columns_from_rows(csv_rows)
+            table = build_table(table_name, columns)
+            metadata.create_all(engine)
+            prepared_rows = prepare_rows(csv_rows, columns)
+            insert_rows(session, table, prepared_rows)
+        else:
+            print(f"Skipping {table_name}: CSV not found at {csv_path}")
+
+
 def main():
     print("Connecting to PostgreSQL at %s" % DATABASE_URL)
     engine = create_engine(DATABASE_URL, echo=False)
@@ -212,24 +235,33 @@ def main():
     wait_for_postgres(engine)
     create_schema(engine)
 
+    Session = sessionmaker(bind=engine)
+    
+    # Load SRE KPI data
+    print("\n=== Loading SRE KPI Data ===")
     csv_rows = load_csv_rows(SAMPLE_CSV_PATH)
     if csv_rows:
         columns = build_columns_from_rows(csv_rows)
-        table = build_table(columns)
+        table = build_table(TABLE_NAME, columns)
         metadata.create_all(engine)
         prepared_rows = prepare_rows(csv_rows, columns)
     else:
         print(f"CSV not found at {SAMPLE_CSV_PATH}; using built-in sample rows.")
         columns = build_columns_from_rows([DEFAULT_SAMPLE_ROWS[0]])
-        table = build_table(columns)
+        table = build_table(TABLE_NAME, columns)
         metadata.create_all(engine)
         prepared_rows = generate_fallback_rows()
 
-    Session = sessionmaker(bind=engine)
     with Session() as session:
         insert_rows(session, table, prepared_rows)
+    
+    # Load Retail data
+    if LOAD_RETAIL_DATA:
+        print("\n=== Loading Retail Data ===")
+        with Session() as session:
+            load_retail_data(engine, session)
 
-    print("ETL pipeline finished.")
+    print("\nETL pipeline finished.")
 
 
 if __name__ == "__main__":
