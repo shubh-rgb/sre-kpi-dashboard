@@ -109,7 +109,7 @@ def _create_table_panel(
     col_names = ", ".join([f'"{col}"' for col in columns.keys() if col != "id"])
 
     return {
-        "datasource": {"type": "postgres", "uid": "-100"},
+        "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
         "fieldConfig": {
             "defaults": {
                 "color": {"mode": "thresholds"},
@@ -130,7 +130,7 @@ def _create_table_panel(
         "pluginVersion": "10.0.0",
         "targets": [
             {
-                "datasource": {"type": "postgres", "uid": "-100"},
+                "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
                 "format": "table",
                 "rawSql": f'SELECT {col_names} FROM "{table_name}" ORDER BY id DESC LIMIT 100',
                 "refId": "A",
@@ -146,7 +146,7 @@ def _create_stat_panel(
 ) -> Dict[str, Any]:
     """Create a stat/gauge panel for numeric columns"""
     return {
-        "datasource": {"type": "postgres", "uid": "-100"},
+        "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
         "fieldConfig": {
             "defaults": {
                 "color": {"mode": "thresholds"},
@@ -175,7 +175,7 @@ def _create_stat_panel(
         "pluginVersion": "10.0.0",
         "targets": [
             {
-                "datasource": {"type": "postgres", "uid": "-100"},
+                "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
                 "format": "table",
                 "rawSql": f'SELECT AVG("{column}") as value FROM "{table_name}"',
                 "refId": "A",
@@ -197,7 +197,7 @@ def _create_timeseries_panel(
 ) -> Dict[str, Any]:
     """Create a time series panel"""
     return {
-        "datasource": {"type": "postgres", "uid": "-100"},
+        "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
         "fieldConfig": {
             "defaults": {
                 "color": {"mode": "palette-classic"},
@@ -230,7 +230,7 @@ def _create_timeseries_panel(
         "pluginVersion": "10.0.0",
         "targets": [
             {
-                "datasource": {"type": "postgres", "uid": "-100"},
+                "datasource": {"type": "postgres", "uid": "P20067FB903D04B6B"},
                 "format": "table",
                 "rawSql": f'SELECT "{time_col}" as time, "{value_col}" as value FROM "{table_name}" ORDER BY "{time_col}" ASC',
                 "refId": "A",

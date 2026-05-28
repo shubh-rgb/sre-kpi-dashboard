@@ -84,6 +84,10 @@ def infer_type(value: str):
     if value is None or value == "":
         return String(255)
 
+    # Convert to string if not already
+    if not isinstance(value, str):
+        value = str(value)
+    
     value = value.strip()
     if value == "":
         return String(255)

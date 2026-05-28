@@ -2,7 +2,7 @@
   "annotations": {
     "list": []
   },
-  "description": "Auto-generated dashboard for retail_products",
+  "description": "Auto-generated dashboard for c6_(1)",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -67,11 +67,11 @@
             "uid": "P20067FB903D04B6B"
           },
           "format": "table",
-          "rawSql": "SELECT \"product_id\", \"product_name\", \"category\", \"price\", \"stock_quantity\" FROM \"retail_products\" ORDER BY id DESC LIMIT 100",
+          "rawSql": "SELECT \"Created Time\", \"Ticket Id\", \"Effort Required to Resolve (in mins)\", \"Requester Email\", \"Agent\", \"Subject\", \"Type\" FROM \"c6_(1)\" ORDER BY id DESC LIMIT 100",
           "refId": "A"
         }
       ],
-      "title": "Retail Products - Recent Records",
+      "title": "C6 (1) - Recent Records",
       "type": "table"
     }
   ],
@@ -80,7 +80,7 @@
   "style": "dark",
   "tags": [
     "auto-generated",
-    "retail_products"
+    "c6_(1)"
   ],
   "templating": {
     "list": []
@@ -91,8 +91,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Retail Products Dashboard",
-  "uid": "retail_products",
+  "title": "C6 (1) Dashboard",
+  "uid": "c6_(1)",
   "version": 1,
   "weekStart": ""
 }

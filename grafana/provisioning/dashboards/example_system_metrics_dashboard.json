@@ -2,7 +2,7 @@
   "annotations": {
     "list": []
   },
-  "description": "Auto-generated dashboard for retail_products",
+  "description": "Auto-generated dashboard for example_system_metrics",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
@@ -67,11 +67,11 @@
             "uid": "P20067FB903D04B6B"
           },
           "format": "table",
-          "rawSql": "SELECT \"product_id\", \"product_name\", \"category\", \"price\", \"stock_quantity\" FROM \"retail_products\" ORDER BY id DESC LIMIT 100",
+          "rawSql": "SELECT \"timestamp\", \"cpu_usage\", \"memory_usage\", \"disk_usage\", \"service_name\" FROM \"example_system_metrics\" ORDER BY id DESC LIMIT 100",
           "refId": "A"
         }
       ],
-      "title": "Retail Products - Recent Records",
+      "title": "Example System Metrics - Recent Records",
       "type": "table"
     }
   ],
@@ -80,7 +80,7 @@
   "style": "dark",
   "tags": [
     "auto-generated",
-    "retail_products"
+    "example_system_metrics"
   ],
   "templating": {
     "list": []
@@ -91,8 +91,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Retail Products Dashboard",
-  "uid": "retail_products",
+  "title": "Example System Metrics Dashboard",
+  "uid": "example_system_metrics",
   "version": 1,
   "weekStart": ""
 }

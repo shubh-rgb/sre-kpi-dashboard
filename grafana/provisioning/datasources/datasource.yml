@@ -8,10 +8,11 @@ datasources:
     isDefault: true
     editable: true
 
-    url: postgres
+    host: postgres
     port: 5432
     user: postgres
     database: governance
+    sslmode: disable
 
     jsonData:
       sslmode: disable
