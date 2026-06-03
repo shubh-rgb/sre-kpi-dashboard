@@ -20,3 +20,23 @@ datasources:
 
     secureJsonData:
       password: admin
+
+  - name: Default Postgres
+    type: postgres
+    access: proxy
+    orgId: 1
+    isDefault: false
+    editable: true
+
+    host: postgres
+    port: 5432
+    user: postgres
+    database: postgres
+    sslmode: disable
+
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1600
+
+    secureJsonData:
+      password: admin
