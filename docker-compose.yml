@@ -40,25 +40,16 @@ services:
     container_name: governance-pipeline
     depends_on:
       - postgres
+    env_file: .env
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
-      DB_NAME: governance
       DB_USER: postgres
       DB_PASSWORD: admin
-      DB_SCHEMA: public
-      TABLE_NAME: sre_kpis
-      # SAMPLE_CSV_PATH: sample_kpis.csv
-      LOAD_RETAIL_DATA: "true"
-      LOAD_FRESHSERVICE_DATA: "false"
-      AUTO_GENERATE_DASHBOARDS: "true"
-      FRESHSERVICE_API_KEY: ""
-      FRESHSERVICE_DOMAIN: ""
     volumes:
       - ./pipeline:/app
       - ./pipeline/documents:/app/documents
-      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
-    command: ["python", "etl_enhanced.py"]
+    command: ["python", "etl_streamlined.py"]
 
 volumes:
   postgres_data:
