@@ -9,11 +9,16 @@ from typing import Dict, Any
 
 # Get credentials from environment
 API_KEY = os.getenv("FRESHSERVICE_API_KEY", "")
-DOMAIN = os.getenv("FRESHSERVICE_DOMAIN", "ttnmssupport")
+DOMAIN = os.getenv("FRESHSERVICE_DOMAIN", "")
 
 if not API_KEY:
     print("❌ Error: FRESHSERVICE_API_KEY not set in environment")
     print("Set it with: export FRESHSERVICE_API_KEY=your_key")
+    exit(1)
+
+if not DOMAIN:
+    print("❌ Error: FRESHSERVICE_DOMAIN not set in environment")
+    print("Set it with: export FRESHSERVICE_DOMAIN=your_domain")
     exit(1)
 
 BASE_URL = f"https://{DOMAIN}.freshservice.com/api/v2"
@@ -103,8 +108,8 @@ def main():
     if not test_connection():
         print("\n❌ Cannot connect to Freshservice API")
         print("\n💡 Troubleshooting:")
-        print("   1. Check API key is correct: pRZTtmEWbZvE2K68kOND")
-        print("   2. Check domain is correct: ttnmssupport")
+        print("   1. Check API key is correct:")
+        print("   2. Check domain is correct in FRESHSERVICE_DOMAIN env var")
         print("   3. Check API key hasn't been revoked")
         print("   4. Check if Freshservice account has API access")
         exit(1)
